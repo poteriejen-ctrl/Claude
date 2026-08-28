@@ -1,0 +1,501 @@
+<title>유연마인드짐</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=IBM+Plex+Sans+KR:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --pumpkin: #FF6400;
+    --eggshell: #F5EBE1;
+    --eggshell-deep: #EADACB;
+    --salad: #8CC850;
+    --bottle: #003223;
+    --bottle-soft: #3C6153;
+
+    --bg: var(--eggshell);
+    --ink: var(--bottle);
+    --ink-soft: var(--bottle-soft);
+    --ink-faint: #7C8C82;
+    --line: rgba(0, 50, 35, 0.14);
+    --line-strong: rgba(0, 50, 35, 0.28);
+    --surface: #FBF7F1;
+    --accent: var(--pumpkin);
+
+    --dark-bg: var(--bottle);
+    --dark-ink: var(--eggshell);
+    --dark-ink-soft: rgba(245, 235, 225, 0.7);
+    --dark-line: rgba(245, 235, 225, 0.16);
+
+    --font-display: 'Gowun Batang', 'Noto Serif KR', serif;
+    --font-body: 'IBM Plex Sans KR', 'Pretendard', -apple-system, sans-serif;
+    --font-mono: 'IBM Plex Mono', ui-monospace, 'SFMono-Regular', monospace;
+
+    --content-w: 1180px;
+    --pad: clamp(1.5rem, 5vw, 5rem);
+  }
+
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--font-body);
+    font-weight: 300;
+    line-height: 1.75;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  a { color: inherit; }
+  a:focus-visible, button:focus-visible { outline: 2px solid var(--pumpkin); outline-offset: 3px; }
+  ::selection { background: rgba(255, 100, 0, 0.2); }
+
+  .wrap { max-width: var(--content-w); margin: 0 auto; padding-left: var(--pad); padding-right: var(--pad); }
+  .full-bleed { width: 100vw; position: relative; left: 50%; margin-left: -50vw; }
+
+  .eyebrow {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+  }
+  .band-dark .eyebrow, .on-dark .eyebrow { color: var(--dark-ink-soft); }
+
+  h1, h2, h3 { margin: 0; text-wrap: balance; font-weight: 400; }
+  .serif { font-family: var(--font-display); }
+
+  section { position: relative; }
+  .band { padding-top: clamp(4.5rem, 9vw, 7.5rem); padding-bottom: clamp(4.5rem, 9vw, 7.5rem); }
+  .band-dark { background: var(--dark-bg); color: var(--dark-ink); }
+  .band-tight { padding-top: clamp(3rem, 6vw, 4.5rem); padding-bottom: clamp(3rem, 6vw, 4.5rem); }
+
+  .section-head { display: flex; flex-direction: column; gap: 1rem; margin-bottom: clamp(2.4rem, 6vw, 4rem); max-width: 62ch; }
+  .section-head h2 { font-family: var(--font-display); font-size: clamp(1.7rem, 1.1rem + 2.2vw, 2.6rem); line-height: 1.35; }
+  .section-lede { color: var(--ink-soft); font-size: 1.02rem; max-width: 58ch; }
+  .band-dark .section-lede { color: var(--dark-ink-soft); }
+  .center { text-align: center; align-items: center; margin-left: auto; margin-right: auto; }
+
+  hr.thin { border: none; border-top: 1px solid var(--line); margin: clamp(2.4rem, 6vw, 4rem) 0; }
+  .band-dark hr.thin { border-top-color: var(--dark-line); }
+
+  /* ---------- image placeholder ---------- */
+  .img-slot {
+    border: 1px dashed var(--line-strong);
+    background: repeating-linear-gradient(135deg, rgba(0,50,35,0.06) 0 12px, rgba(0,50,35,0.02) 12px 24px);
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    gap: 0.5rem; text-align: center; padding: 1.2rem; color: var(--ink-faint);
+    position: relative; overflow: hidden;
+  }
+  .on-dark .img-slot, .band-dark .img-slot { border-color: var(--dark-line); background: repeating-linear-gradient(135deg, rgba(245,235,225,0.06) 0 12px, rgba(245,235,225,0.02) 12px 24px); color: var(--dark-ink-soft); }
+  .img-slot svg { width: 22px; height: 22px; opacity: 0.55; }
+  .img-slot .slot-tag { font-family: var(--font-mono); font-size: 0.62rem; letter-spacing: 0.1em; text-transform: uppercase; opacity: 0.85; }
+  .img-slot .slot-desc { font-size: 0.78rem; max-width: 26ch; line-height: 1.5; }
+
+  .img-scrim { position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,50,35,0.88) 0%, rgba(0,50,35,0.35) 42%, transparent 72%); pointer-events: none; }
+  .img-caption { position: absolute; left: 0; right: 0; bottom: 0; padding: clamp(1.4rem, 3vw, 2.4rem); color: var(--eggshell); z-index: 2; display: flex; flex-direction: column; gap: 0.5rem; }
+  .img-caption .eyebrow { color: rgba(245,235,225,0.75); }
+  .img-caption h3 { font-family: var(--font-display); font-size: clamp(1.3rem, 1rem + 1.4vw, 1.9rem); }
+  .img-caption p { margin: 0; color: rgba(245,235,225,0.82); font-size: 0.95rem; max-width: 46ch; }
+
+  /* ---------- NAV ---------- */
+  header.top { position: sticky; top: 0; z-index: 20; background: color-mix(in srgb, var(--bg) 88%, transparent); backdrop-filter: blur(10px); border-bottom: 1px solid var(--line); }
+  .top-row { display: flex; align-items: center; justify-content: space-between; padding-top: 1rem; padding-bottom: 1rem; }
+  .brand-mark { font-family: var(--font-display); font-size: 1.05rem; letter-spacing: 0.02em; }
+  .top-tag { font-family: var(--font-mono); font-size: 0.64rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--ink-faint); display: none; }
+  @media (min-width: 640px) { .top-tag { display: inline; } }
+
+  /* ---------- HERO ---------- */
+  .hero { height: 100svh; min-height: 560px; max-height: 920px; display: flex; align-items: flex-end; }
+  .hero .img-slot { height: 100%; border: none; }
+  .hero-inner { position: relative; z-index: 2; width: 100%; padding-bottom: clamp(2.5rem, 7vw, 5rem); display: flex; flex-direction: column; gap: 1.4rem; color: var(--eggshell); }
+  .hero-tagline-en { font-family: var(--font-display); font-style: italic; font-size: clamp(0.95rem, 0.8rem + 0.4vw, 1.15rem); color: rgba(245,235,225,0.8); }
+  .hero-inner h1 { font-family: var(--font-display); font-size: clamp(2.4rem, 1.5rem + 4vw, 4.4rem); line-height: 1.24; }
+  .hero-inner h1 .accent { color: var(--salad); }
+  .hero-sub { max-width: 52ch; color: rgba(245,235,225,0.85); font-size: clamp(1rem, 0.88rem + 0.3vw, 1.12rem); font-weight: 300; }
+  .hero-meta { display: flex; flex-wrap: wrap; gap: 0.7rem 1rem; padding-top: 0.3rem; }
+  .chip { font-family: var(--font-mono); font-size: 0.72rem; letter-spacing: 0.02em; color: var(--eggshell); background: rgba(245,235,225,0.12); border: 1px solid rgba(245,235,225,0.28); padding: 0.5em 0.95em; display: inline-flex; align-items: center; gap: 0.55em; text-decoration: none; transition: background 0.15s ease, border-color 0.15s ease; }
+  .chip::before { content: ""; width: 5px; height: 5px; border-radius: 50%; background: var(--pumpkin); flex: none; }
+  a.chip:hover { border-color: var(--pumpkin); background: rgba(255,100,0,0.16); }
+  .scroll-cue { position: absolute; right: var(--pad); bottom: clamp(1.6rem, 4vw, 2.6rem); z-index: 2; writing-mode: vertical-rl; display: flex; align-items: center; gap: 0.7rem; font-family: var(--font-mono); font-size: 0.65rem; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(245,235,225,0.7); }
+  .scroll-cue .bar { width: 1px; height: 34px; background: rgba(245,235,225,0.3); position: relative; overflow: hidden; }
+  .scroll-cue .bar::after { content: ""; position: absolute; left: 0; top: -100%; width: 100%; height: 100%; background: var(--pumpkin); animation: scrolldrop 2.4s ease-in-out infinite; }
+  @keyframes scrolldrop { 0%, 100% { top: -100%; } 60% { top: 100%; } }
+  @media (prefers-reduced-motion: reduce) { .scroll-cue .bar::after { animation: none; top: 0; } }
+
+  /* ---------- PHILOSOPHY ---------- */
+  .philosophy { max-width: 68ch; }
+  .philosophy .eyebrow { display: block; margin-bottom: 1.2rem; }
+  .philosophy h2 { font-family: var(--font-display); font-size: clamp(1.8rem, 1.2rem + 2.4vw, 2.8rem); line-height: 1.45; margin-bottom: 1.6rem; }
+  .philosophy p.body { color: var(--ink-soft); font-size: 1.04rem; }
+  .philosophy .tagline-repeat { margin-top: 2.4rem; font-family: var(--font-display); font-style: italic; color: var(--ink-faint); font-size: 1rem; }
+
+  /* ---------- STAGES (big image cards) ---------- */
+  .stage-cards { display: flex; flex-direction: column; gap: 1.4rem; }
+  .stage-card { position: relative; aspect-ratio: 16 / 8; }
+  @media (max-width: 700px) { .stage-card { aspect-ratio: 4 / 5; } }
+  .stage-card .img-slot { position: absolute; inset: 0; }
+  .stage-code { position: absolute; top: clamp(1.2rem, 3vw, 2rem); left: clamp(1.2rem, 3vw, 2rem); z-index: 2; font-family: var(--font-mono); font-size: 0.72rem; letter-spacing: 0.1em; color: var(--eggshell); background: rgba(0,50,35,0.5); padding: 0.4em 0.8em; }
+
+  /* ---------- PRINCIPLES ---------- */
+  .principles { display: flex; flex-direction: column; }
+  .principle { display: grid; grid-template-columns: 3rem 1fr; gap: 1.2rem; padding: 1.5rem 0; border-top: 1px solid var(--dark-line); }
+  .principles > .principle:last-child { border-bottom: 1px solid var(--dark-line); }
+  .principle .num { font-family: var(--font-mono); font-size: 1.1rem; color: var(--salad); font-variant-numeric: tabular-nums; }
+  .principle p { margin: 0; font-size: 1.06rem; color: var(--dark-ink); }
+
+  /* ---------- JOURNEY strip ---------- */
+  .journey-hint { font-family: var(--font-mono); font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-faint); margin-bottom: 1rem; }
+  .journey-strip { display: flex; gap: 1.1rem; overflow-x: auto; scroll-snap-type: x mandatory; padding-bottom: 1rem; margin: 0 calc(var(--pad) * -1); padding-left: var(--pad); padding-right: var(--pad); scrollbar-width: thin; }
+  .journey-card { flex: 0 0 auto; width: clamp(220px, 60vw, 280px); scroll-snap-align: start; display: flex; flex-direction: column; gap: 0.9rem; }
+  .journey-card .img-slot { aspect-ratio: 3 / 4; }
+  .journey-card .jc-label { font-family: var(--font-mono); font-size: 0.68rem; letter-spacing: 0.1em; color: var(--pumpkin); }
+  .journey-card h3 { font-family: var(--font-display); font-size: 1.25rem; }
+  .journey-card p { margin: 0; color: var(--ink-soft); font-size: 0.92rem; }
+
+  /* ---------- PERSONA ---------- */
+  .persona-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.4rem; }
+  @media (max-width: 780px) { .persona-grid { grid-template-columns: 1fr; } }
+  .persona-card { display: flex; flex-direction: column; gap: 1rem; }
+  .persona-card .img-slot { aspect-ratio: 4 / 5; }
+  .persona-card .tag { font-family: var(--font-mono); font-size: 0.64rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--pumpkin); }
+  .persona-card h3 { font-family: var(--font-display); font-size: 1.2rem; }
+  .persona-card p { margin: 0; color: var(--ink-soft); font-size: 0.95rem; }
+
+  /* ---------- PROBLEM ---------- */
+  .problem-list { display: flex; flex-direction: column; max-width: 66ch; }
+  .problem-item { display: grid; grid-template-columns: 1.6rem 1fr; gap: 1rem; padding: 1.3rem 0; border-top: 1px solid var(--line); }
+  .problem-list .problem-item:last-child { border-bottom: 1px solid var(--line); }
+  .problem-item .mk { font-family: var(--font-mono); color: var(--pumpkin); }
+  .problem-item p { margin: 0; font-size: 1.04rem; color: var(--ink-soft); }
+  .problem-item p b { font-weight: 500; color: var(--ink); }
+  .note-card { margin-top: clamp(2rem, 5vw, 3rem); padding: clamp(1.4rem, 4vw, 2rem); background: var(--surface); border-left: 2px solid var(--pumpkin); max-width: 64ch; font-size: 1rem; color: var(--ink-soft); }
+  .note-card strong { color: var(--ink); font-weight: 500; }
+
+  /* ---------- TEASER ---------- */
+  .teaser-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.4rem; }
+  @media (max-width: 720px) { .teaser-grid { grid-template-columns: 1fr; } }
+  .teaser-card { position: relative; aspect-ratio: 5 / 4; }
+  .teaser-card .img-slot { position: absolute; inset: 0; }
+
+  /* ---------- CLOSING ---------- */
+  .closing { height: 78svh; min-height: 460px; max-height: 760px; display: flex; align-items: center; justify-content: center; }
+  .closing .img-slot { position: absolute; inset: 0; border: none; }
+  .closing-inner { position: relative; z-index: 2; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 1.4rem; color: var(--eggshell); padding: 0 var(--pad); }
+  .closing-inner h2 { font-family: var(--font-display); font-size: clamp(1.8rem, 1.2rem + 2.6vw, 3rem); line-height: 1.4; max-width: 18ch; }
+  .closing-inner p { margin: 0; color: rgba(245,235,225,0.82); max-width: 44ch; }
+  .status-link { font-family: var(--font-mono); font-size: 0.78rem; letter-spacing: 0.04em; color: var(--eggshell); border: 1px solid rgba(245,235,225,0.35); padding: 0.7em 1.4em; text-decoration: none; transition: border-color 0.15s ease, background 0.15s ease; }
+  .status-link:hover { border-color: var(--pumpkin); background: rgba(255,100,0,0.14); }
+
+  /* ---------- FOOTER ---------- */
+  footer.close { background: var(--dark-bg); color: var(--dark-ink); padding-top: clamp(2.6rem, 5vw, 3.4rem); padding-bottom: clamp(2.2rem, 5vw, 2.8rem); }
+  .foot-grid { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 1.8rem; }
+  .foot-block .eyebrow { color: var(--dark-ink-soft); display: block; margin-bottom: 0.5rem; }
+  .foot-block p, .foot-block address { margin: 0; font-style: normal; color: var(--dark-ink-soft); font-size: 0.92rem; }
+  .foot-legal { margin-top: clamp(1.8rem, 4vw, 2.4rem); padding-top: 1.4rem; border-top: 1px solid var(--dark-line); font-family: var(--font-mono); font-size: 0.66rem; color: var(--dark-ink-soft); letter-spacing: 0.02em; }
+</style>
+
+<header class="top">
+  <div class="wrap top-row">
+    <div class="brand-mark">유연마인드짐</div>
+    <div class="top-tag">Mental Fitness Platform · 진주 · 사천</div>
+  </div>
+</header>
+
+<main>
+  <!-- HERO -->
+  <section class="hero full-bleed">
+    <div class="img-slot">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><rect x="3" y="5" width="18" height="14" rx="1"></rect><circle cx="8.5" cy="10" r="1.5"></circle><path d="M21 15l-5-5-8 8"></path></svg>
+      <span class="slot-tag">Image · Hero</span>
+      <span class="slot-desc">새벽 자연광 속에서 호흡하는 인물, 다큐멘터리 톤</span>
+    </div>
+    <div class="img-scrim"></div>
+    <div class="wrap hero-inner">
+      <p class="hero-tagline-en">Where the mind trains as the body does.</p>
+      <h1>몸을 운동하듯,<br><span class="accent">마음도 훈련합니다</span></h1>
+      <p class="hero-sub">
+        심리학과 마음공부, 여러 명상법을 상황에 맞게 소개하며
+        반복 훈련으로 삶을 더 유연하게 살아가는 힘을 기르도록 돕습니다.
+      </p>
+      <div class="hero-meta">
+        <a class="chip" href="https://blog.naver.com/spring0097_" target="_blank" rel="noopener">네이버 블로그 운영 중</a>
+        <span class="chip">진주시 문화사업가 양성과정 참여 중</span>
+      </div>
+    </div>
+    <div class="scroll-cue"><span class="bar"></span>Scroll</div>
+  </section>
+
+  <!-- PHILOSOPHY -->
+  <section class="band">
+    <div class="wrap philosophy">
+      <span class="eyebrow">Brand Philosophy</span>
+      <h2>몸을 훈련하듯 마음도 훈련하는,<br>다양한 마음공부를 잇는 곳</h2>
+      <p class="body">
+        마음공부와 명상을 처음 접하는 사람에게 다양한 명상법과 마음의 작동 원리를 쉽게 전합니다.
+        한 가지 방법을 정답처럼 내세우지 않고, 직접 수련한 경험을 바탕으로 심리학과 마음공부의 관점을
+        주제에 따라 선정해 소개하며, 반복적인 훈련으로 회복탄력성을 기르도록 돕습니다.
+        산업 및 조직심리학 석사, 17년간 의료조직 근무, 다양한 명상 수련 경험을 바탕으로 만들어갑니다.
+      </p>
+      <p class="tagline-repeat">"몸이 운동하듯 마음도 훈련이 필요합니다."</p>
+    </div>
+  </section>
+
+  <!-- PROBLEM -->
+  <section class="band band-tight" id="problem">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow">이런 마음, 낯설지 않다면</span>
+        <h2 class="serif">어렵게 생각하지 않아도 괜찮습니다</h2>
+        <p class="section-lede">완벽한 방법이나 많은 지식이 필요한 게 아닙니다. 오늘 나에게 맞는 방법 하나를 찾아, 작게 시작하면 충분합니다.</p>
+      </div>
+      <div class="problem-list">
+        <div class="problem-item"><span class="mk">―</span><p><b>명상이 좋다는 건 알지만</b>, 방법이 너무 많아 무엇부터 시작해야 할지 모르겠다</p></div>
+        <div class="problem-item"><span class="mk">―</span><p><b>혼자 앱이나 영상으로 시도했지만</b>, 며칠 만에 흐지부지된 경험이 있다</p></div>
+        <div class="problem-item"><span class="mk">―</span><p><b>상담을 받을 정도는 아닌 것 같은데</b>, 마음은 계속 무겁게 남아 있다</p></div>
+      </div>
+      <div class="note-card">
+        <strong>거창한 준비는 필요 없습니다.</strong>
+        혼자서도 언제든 시작할 수 있고, 내 속도에 맞춰 나에게 맞는 방법을 천천히 찾아가면 됩니다.
+        그리고 타인의 마음을 돌보는 사람에게도, 스스로를 회복시키는 자신만의 훈련은 필요합니다.
+      </div>
+    </div>
+  </section>
+
+  <!-- STAGES -->
+  <section class="band" id="solution">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow">세 걸음의 여정</span>
+        <h2 class="serif">콘텐츠 → 커뮤니티 → 프로그램, 순서대로 훈련합니다</h2>
+        <p class="section-lede">세 가지를 한 번에 벌이지 않습니다. 지금은 콘텐츠로 다지는 첫 걸음입니다.</p>
+      </div>
+      <div class="stage-cards">
+        <div class="stage-card">
+          <div class="img-slot">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><rect x="3" y="5" width="18" height="14" rx="1"></rect><circle cx="8.5" cy="10" r="1.5"></circle><path d="M21 15l-5-5-8 8"></path></svg>
+            <span class="slot-desc">노트북 앞에서 글을 쓰는 손, 따뜻한 창가 조명</span>
+          </div>
+          <div class="img-scrim"></div>
+          <span class="stage-code">STAGE 01</span>
+          <div class="img-caption">
+            <span class="eyebrow">Content Practice</span>
+            <h3>콘텐츠로 다지기</h3>
+            <p>블로그로 다양한 명상법과 마음의 작동 원리를 나눕니다. 진주시 문화사업가 양성과정에 참여하며 사업의 기반을 다지고 있습니다.</p>
+          </div>
+        </div>
+        <div class="stage-card">
+          <div class="img-slot">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><rect x="3" y="5" width="18" height="14" rx="1"></rect><circle cx="8.5" cy="10" r="1.5"></circle><path d="M21 15l-5-5-8 8"></path></svg>
+            <span class="slot-desc">작은 원을 이루어 함께 앉은 사람들, 뒷모습 중심</span>
+          </div>
+          <div class="img-scrim"></div>
+          <span class="stage-code">STAGE 02</span>
+          <div class="img-caption">
+            <span class="eyebrow">Shared Training</span>
+            <h3>함께 훈련하기</h3>
+            <p>정기 모임 또는 멤버십 커뮤니티로 확장해, 혼자가 아니라 함께 꾸준히 훈련합니다.</p>
+          </div>
+        </div>
+        <div class="stage-card">
+          <div class="img-slot">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><rect x="3" y="5" width="18" height="14" rx="1"></rect><circle cx="8.5" cy="10" r="1.5"></circle><path d="M21 15l-5-5-8 8"></path></svg>
+            <span class="slot-desc">촛불 하나, 방석 위에 정좌한 실루엣</span>
+          </div>
+          <div class="img-scrim"></div>
+          <span class="stage-code">STAGE 03</span>
+          <div class="img-caption">
+            <span class="eyebrow">Deeper Program</span>
+            <h3>프로그램으로 깊어지기</h3>
+            <p>강좌와 프로그램을 도입해, 원하는 만큼 더 깊이 훈련할 수 있는 길을 엽니다.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRINCIPLES -->
+  <section class="band band-dark" id="principles">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow">어떻게 다른가</span>
+        <h2 class="serif">유연마인드짐의 훈련 원칙</h2>
+      </div>
+      <div class="principles">
+        <div class="principle"><span class="num">01</span><p>한 가지 명상법만 정답처럼 고집하지 않습니다</p></div>
+        <div class="principle"><span class="num">02</span><p>모든 명상법을 직접 수련해보고 나서 소개합니다</p></div>
+        <div class="principle"><span class="num">03</span><p>심리학과 마음공부, 두 관점을 함께 씁니다 — 특정 종교가 아닌, 삶에 적용하는 관점으로 풀어냅니다</p></div>
+        <div class="principle"><span class="num">04</span><p>이론만 전하지 않고, 실전 수련과 함께 전합니다</p></div>
+        <div class="principle"><span class="num">05</span><p>경험한 것과 검증된 것을 구분해, 아는 만큼만 솔직하게 말합니다</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- JOURNEY (블로그 카테고리) -->
+  <section class="band" id="content">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow">지금 만나는 곳</span>
+        <h2 class="serif">블로그 속 다섯 개의 결</h2>
+        <p class="section-lede">이 다섯 가지 결을 따라, 마음을 훈련하는 관점을 나눕니다.</p>
+      </div>
+      <p class="journey-hint">← 옆으로 넘겨보세요 →</p>
+      <div class="journey-strip">
+        <div class="journey-card">
+          <div class="img-slot">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><rect x="3" y="5" width="18" height="14" rx="1"></rect><circle cx="8.5" cy="10" r="1.5"></circle><path d="M21 15l-5-5-8 8"></path></svg>
+            <span class="slot-desc">문화사업가 양성과정 수업 현장</span>
+          </div>
+          <span class="jc-label">결 01</span>
+          <h3>유연마인드짐</h3>
+          <p>브랜드 소개와 활동·프로그램 이야기</p>
+        </div>
+        <div class="journey-card">
+          <div class="img-slot">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><rect x="3" y="5" width="18" height="14" rx="1"></rect><circle cx="8.5" cy="10" r="1.5"></circle><path d="M21 15l-5-5-8 8"></path></svg>
+            <span class="slot-desc">차·노트가 놓인 창가 정물</span>
+          </div>
+          <span class="jc-label">결 02</span>
+          <h3>웰니스</h3>
+          <p>마음과 회복, 일상에서 실천하는 심리·마음챙김</p>
+        </div>
+        <div class="journey-card">
+          <div class="img-slot">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><rect x="3" y="5" width="18" height="14" rx="1"></rect><circle cx="8.5" cy="10" r="1.5"></circle><path d="M21 15l-5-5-8 8"></path></svg>
+            <span class="slot-desc">수련 중인 손 모양(무드라) 클로즈업</span>
+          </div>
+          <span class="jc-label">결 03</span>
+          <h3>수련일지</h3>
+          <p>실제 명상·마음훈련 경험과 배운 점의 기록</p>
+        </div>
+        <div class="journey-card">
+          <div class="img-slot">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><rect x="3" y="5" width="18" height="14" rx="1"></rect><circle cx="8.5" cy="10" r="1.5"></circle><path d="M21 15l-5-5-8 8"></path></svg>
+            <span class="slot-desc">책이 쌓인 독서 공간, 은은한 자연광</span>
+          </div>
+          <span class="jc-label">결 04</span>
+          <h3>마음서재</h3>
+          <p>생각과 책으로 만나는 마음공부, 일상에 닿는 언어로</p>
+        </div>
+        <div class="journey-card">
+          <div class="img-slot">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><rect x="3" y="5" width="18" height="14" rx="1"></rect><circle cx="8.5" cy="10" r="1.5"></circle><path d="M21 15l-5-5-8 8"></path></svg>
+            <span class="slot-desc">메모·다이어그램이 적힌 노트와 펜</span>
+          </div>
+          <span class="jc-label">결 05</span>
+          <h3>성장노트</h3>
+          <p>배우고 실천하며 성장해가는 기록</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PERSONA -->
+  <section class="band band-tight" id="persona">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow">누구와 함께하는가</span>
+        <h2 class="serif">이 공간이 필요한 사람들</h2>
+      </div>
+      <div class="persona-grid">
+        <div class="persona-card">
+          <div class="img-slot">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><rect x="3" y="5" width="18" height="14" rx="1"></rect><circle cx="8.5" cy="10" r="1.5"></circle><path d="M21 15l-5-5-8 8"></path></svg>
+            <span class="slot-desc">책상 앞에서 눈을 감고 목·어깨를 이완하는 30~50대</span>
+          </div>
+          <span class="tag">Primary</span>
+          <h3>지치고 흔들리는 당신에게</h3>
+          <p>스트레스와 번아웃 속에서 여러 명상법을 시도했지만 오래 이어가지 못한 직장인·워킹맘·자영업자·교사·간호사·공무원.</p>
+        </div>
+        <div class="persona-card">
+          <div class="img-slot">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><rect x="3" y="5" width="18" height="14" rx="1"></rect><circle cx="8.5" cy="10" r="1.5"></circle><path d="M21 15l-5-5-8 8"></path></svg>
+            <span class="slot-desc">명상 방석에 처음 앉아보는 초보자, 어색하지만 진지한 표정</span>
+          </div>
+          <span class="tag">Beginner</span>
+          <h3>마음공부가 처음인 당신에게</h3>
+          <p>심리학도 마음공부도 낯설지만, 배경지식 없이도 쉽게 이해하고 마음의 원리를 알아가고 싶은 분.</p>
+        </div>
+        <div class="persona-card">
+          <div class="img-slot">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><rect x="3" y="5" width="18" height="14" rx="1"></rect><circle cx="8.5" cy="10" r="1.5"></circle><path d="M21 15l-5-5-8 8"></path></svg>
+            <span class="slot-desc">조용한 공간에서 혼자 숨을 고르는 상담사·케어러의 뒷모습</span>
+          </div>
+          <span class="tag">Caregiver</span>
+          <h3>마음을 다루는 당신에게</h3>
+          <p>심리상담을 망설이고 있거나, 맞는 상담사를 찾지 못한 분. 그리고 타인의 마음을 돌보느라 스스로 소진된 상담사 자신.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TEASER -->
+  <section class="band band-dark" id="teaser">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow">다음 이야기</span>
+        <h2 class="serif">요즘 준비하고 있는 것들</h2>
+      </div>
+      <div class="teaser-grid">
+        <div class="teaser-card">
+          <div class="img-slot">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><rect x="3" y="5" width="18" height="14" rx="1"></rect><circle cx="8.5" cy="10" r="1.5"></circle><path d="M21 15l-5-5-8 8"></path></svg>
+            <span class="slot-desc">빈 방석과 의자가 놓인 조용한 클래스 공간</span>
+          </div>
+          <div class="img-scrim"></div>
+          <div class="img-caption">
+            <span class="eyebrow">Class</span>
+            <h3>무료 클래스를 준비하고 있어요</h3>
+            <p>다양한 명상법 중 하나를 골라, 처음 만나는 자리를 마련합니다.</p>
+          </div>
+        </div>
+        <div class="teaser-card">
+          <div class="img-slot">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><rect x="3" y="5" width="18" height="14" rx="1"></rect><circle cx="8.5" cy="10" r="1.5"></circle><path d="M21 15l-5-5-8 8"></path></svg>
+            <span class="slot-desc">자연 속 산책로에서 잠시 멈춰선 뒷모습</span>
+          </div>
+          <div class="img-scrim"></div>
+          <div class="img-caption">
+            <span class="eyebrow">Journal</span>
+            <h3>수련의 과정을, 있는 그대로 기록합니다</h3>
+            <p>잘 된 순간만이 아니라 어려웠던 순간까지, 겪은 그대로 솔직하게 남깁니다.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CLOSING -->
+  <section class="closing full-bleed">
+    <div class="img-slot">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><rect x="3" y="5" width="18" height="14" rx="1"></rect><circle cx="8.5" cy="10" r="1.5"></circle><path d="M21 15l-5-5-8 8"></path></svg>
+      <span class="slot-tag">Image · Closing</span>
+      <span class="slot-desc">사천·진주의 산 또는 바다 위로 해가 뜨는 풍경</span>
+    </div>
+    <div class="img-scrim" style="background:linear-gradient(to top, rgba(0,50,35,0.75), rgba(0,50,35,0.55) 50%, rgba(0,50,35,0.35));"></div>
+    <div class="closing-inner">
+      <span class="eyebrow">지금도, 꾸준히</span>
+      <h2>꾸준히 함께할 수 있는<br>마음공부 커뮤니티를 만듭니다</h2>
+      <p>지금은 네이버 블로그에서 꾸준히 이야기를 나누고 있습니다.</p>
+      <a class="status-link" href="https://blog.naver.com/spring0097_" target="_blank" rel="noopener">네이버 블로그 바로가기</a>
+    </div>
+  </section>
+</main>
+
+<footer class="close">
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-block">
+        <span class="eyebrow">위치</span>
+        <address>진주 · 사천을 기반으로 활동합니다</address>
+      </div>
+      <div class="foot-block">
+        <span class="eyebrow">브랜드</span>
+        <p>몸을 훈련하듯 마음도 훈련하는, 멘탈 피트니스 플랫폼</p>
+      </div>
+    </div>
+    <div class="foot-legal">© 유연마인드짐 — MENTAL FITNESS PLATFORM</div>
+  </div>
+</footer>
