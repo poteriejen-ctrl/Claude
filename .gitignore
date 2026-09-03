@@ -2,3 +2,5 @@ __MACOSX/
 .DS_Store
 Thumbs.db
 *.msi
+_netlify-deploy/
+.blog-dev.log
