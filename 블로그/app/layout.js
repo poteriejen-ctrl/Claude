@@ -19,7 +19,7 @@ export default function RootLayout({ children }) {
       <body>
         <header className="blog-topbar">
           <div className="wrap">
-            <a className="blog-brand" href="http://localhost:8843/yooyeon-mindgym-home.html">유연마인드짐</a>
+            <a className="blog-brand" href="http://localhost:8844/">유연마인드짐</a>
             <a className="blog-back" href="/blog">블로그 목록</a>
           </div>
         </header>

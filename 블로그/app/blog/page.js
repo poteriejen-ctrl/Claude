@@ -1,6 +1,6 @@
 import { getPosts } from "../../lib/notion";
 
-export const revalidate = 3600;
+export const revalidate = 60;
 
 export const metadata = {
   title: "블로그 · 유연마인드짐",

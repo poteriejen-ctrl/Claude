@@ -3,7 +3,7 @@ import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { notFound } from "next/navigation";
 
-export const revalidate = 3600;
+export const revalidate = 60;
 
 export async function generateMetadata({ params }) {
   const { slug } = await params;

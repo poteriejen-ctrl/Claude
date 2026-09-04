@@ -5,6 +5,8 @@
   --salad: #8CC850;
   --bottle: #003223;
   --bottle-soft: #3C6153;
+  --terracotta: #C1602E;
+  --terracotta-deep: #A8583A;
 
   --bg: var(--eggshell);
   --ink: var(--bottle);
@@ -104,9 +106,10 @@ a { color: inherit; }
   margin: 1.8rem auto 2.4rem;
 }
 .post-body { max-width: 72ch; margin: 0 auto; line-height: 1.85; font-size: 1rem; }
-.post-body h2 { font-family: var(--font-display); font-size: 1.5rem; margin: 2.2rem 0 0.9rem; }
+.post-body h2 { font-family: var(--font-display); font-size: 1.5rem; margin: 2.2rem 0 0.9rem; color: var(--terracotta); }
 .post-body h3 { font-family: var(--font-display); font-size: 1.2rem; margin: 1.8rem 0 0.7rem; }
 .post-body p { margin: 0 0 1.2rem; }
+.post-body strong { color: var(--terracotta-deep); font-weight: 600; }
 .post-body a { color: var(--pumpkin); }
 .post-body ul, .post-body ol { padding-left: 1.4rem; margin: 0 0 1.2rem; }
 .post-body img { max-width: 100%; }
